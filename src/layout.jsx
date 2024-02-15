@@ -2,6 +2,7 @@ import { useContext } from "react";
 import Auth from "./auth";
 import { AppContext } from "./App";
 import { Link, Outlet } from "react-router-dom";
+import { supabase } from "./utils/supabaseClient";
 
 export default function Layout() {
   let { user } = useContext(AppContext);

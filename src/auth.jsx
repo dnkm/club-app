@@ -21,34 +21,52 @@ function SignUp() {
     let { error } = await supabase.auth.signUp({
       email: ev.target.email.value,
       password: ev.target.password.value,
+      options: {
+        data: {
+          full_name: ev.target.full_name.value,
+          grad_year: parseInt(ev.target.grad_year.value, 10),
+        },
+      },
     });
 
     if (error) setError(error.message);
   }
 
   return (
-    <form onSubmit={signUp} className="flex-grow text-center">
+    <form onSubmit={signUp} className="flex-grow text-center space-y-5">
       <div className="font-bold text-xl">Register</div>
       <input
-        className="input input-primary w-full my-5"
+        className="input input-primary w-full"
         type="email"
         placeholder="email"
-        htmlFor="email"
-        id="email"
+        name="email"
       />
-      <br />
       <input
-        className="input input-primary w-full mb-5"
+        className="input input-primary w-full"
         type="password"
         placeholder="password"
-        htmlFor="password"
-        id="password"
+        name="password"
       />
-      <br />
+      <input
+        className="input input-primary w-full"
+        type="text"
+        placeholder="Full Name"
+        name="full_name"
+      />
+      <select
+        name="grad_year"
+        className="select select-primary w-full"
+      >
+        {new Array(6).fill(undefined).map((_, i) => (
+          <option key={i} value={new Date().getFullYear() + i}>
+            {new Date().getFullYear() + i} ({12 - i}th grade)
+          </option>
+        ))}
+      </select>
       <button className="btn btn-sm btn-primary btn-outline w-full">
         Sign Up
       </button>
-      {error && <div className="text-error mt-5">{error.message}</div>}
+      {error && <div className="text-error">{error.message}</div>}
     </form>
   );
 }
@@ -68,28 +86,26 @@ function SignIn() {
   }
 
   return (
-    <form onSubmit={signIn} className="flex-grow text-center">
+    <form onSubmit={signIn} className="flex-grow text-center space-y-5">
       <div className="font-bold text-xl">Sign In</div>
       <input
-        className="input input-primary w-full my-5"
+        className="input input-primary w-full"
         type="email"
         placeholder="email"
         htmlFor="email"
-        id="email"
+        name="email"
       />
-      <br />
       <input
-        className="input input-primary w-full mb-5"
+        className="input input-primary w-full"
         type="password"
         placeholder="password"
         htmlFor="password"
-        id="password"
+        name="password"
       />
-      <br />
       <button className="btn btn-sm btn-primary btn-outline w-full">
         Sign In
       </button>
-      {error && <div className="text-error mt-5">{error.message}</div>}
+      {error && <div className="text-error">{error.message}</div>}
     </form>
   );
 }
